@@ -2,7 +2,11 @@ from django.db import connection
 from contextlib import closing
 
 
-
+def get_images():
+    with closing(connection.cursor()) as cursor:
+        cursor.execute("""select * from image""")
+        images = dict_fetchall(cursor)
+        return images
 
 
 def get_categories():
@@ -11,6 +15,7 @@ def get_categories():
         categories = dict_fetchall(cursor)
         return categories
 
+
 def get_products():
     with closing(connection.cursor()) as cursor:
         cursor.execute("""select product.*,category.name as c_name from product inner join category on 
@@ -18,11 +23,13 @@ def get_products():
         products = dict_fetchall(cursor)
         return products
 
+
 def get_chefs():
     with closing(connection.cursor()) as cursor:
         cursor.execute("""select * from chef""")
         chefs = dict_fetchall(cursor)
         return chefs
+
 
 def get_customer():
     with closing(connection.cursor()) as cursor:
@@ -30,15 +37,17 @@ def get_customer():
         customers = dict_fetchall(cursor)
         return customers
 
+
 def get_blog():
     with closing(connection.cursor()) as cursor:
         cursor.execute("""select * from blog""")
         blogs = dict_fetchall(cursor)
         return blogs
 
+
 def get_blog_single(blog_id):
     with closing(connection.cursor()) as cursor:
-        cursor.execute("""select * from blog where blog.id = %s""",[blog_id])
+        cursor.execute("""select * from blog where blog.id = %s""", [blog_id])
         blog = dict_fetchone(cursor)
         return blog
 

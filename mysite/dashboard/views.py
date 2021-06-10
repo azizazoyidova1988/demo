@@ -15,7 +15,6 @@ def login_required_decorator(f):
 def dashboard_page(request):
     category = servises.get_categories_count()
     products_count = servises.get_products_count()
-    print(products_count)
     chefs_count = servises.get_chefs_count()
     customers_count = servises.get_customers_count()
     category_product=servises.get_categories_products_count()

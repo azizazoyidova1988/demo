@@ -63,7 +63,7 @@ class Reservation(models.Model):
     email = models.EmailField(blank=False, null=False)
     phone = models.CharField(max_length=50, blank=False, null=False)
     check_in = models.CharField(max_length=450, blank=False, null=False)
-    time = models.CharField(max_length=20,blank=True, null=False)
+    time = models.CharField(max_length=20, blank=True, null=False)
     guest = models.IntegerField(blank=False, null=False, default=1)
 
     class Meta:
@@ -123,3 +123,15 @@ class User(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class Image(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "image"
+
+    def __str__(self):
+        return self.name

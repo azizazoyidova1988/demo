@@ -197,9 +197,3 @@ def contact(request):
 #     return render(request, 'taste_it/footer.html')
 
 
-def contact_email(request):
-    email = User()
-    if request.POST:
-        email.email = request.POST.get("email")
-        email.save()
-    return render(request, 'taste_it/index.html')
