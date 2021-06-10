@@ -17,6 +17,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='images/', blank=False, null=False)
     description = models.CharField(max_length=250, blank=False, null=False)
     price = models.IntegerField(blank=False, null=False, default=0)
+    category = models.ForeignKey(Category, blank=False, null=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -44,8 +45,10 @@ class Blog(models.Model):
     title = models.CharField(max_length=250, blank=False, null=False)
     image = models.ImageField(upload_to='images/', blank=False, null=False)
     author = models.CharField(max_length=50, blank=False, null=False)
+    author_image = models.ImageField(upload_to='images/', blank=True, null=True)
+    message = models.CharField(max_length=350, blank=True, null=True)
     description = models.CharField(max_length=450, blank=False, null=False)
-    comments=models.IntegerField(blank=False,null=False,default=1)
+    comments = models.IntegerField(blank=False, null=False, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -54,13 +57,14 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
 
+
 class Reservation(models.Model):
     name = models.CharField(max_length=150, blank=False, null=False)
     email = models.EmailField(blank=False, null=False)
     phone = models.CharField(max_length=50, blank=False, null=False)
     check_in = models.CharField(max_length=450, blank=False, null=False)
-    time = models.TimeField(auto_now=True)
-    guest = models.IntegerField(blank=False,null=False,default=1)
+    time = models.CharField(max_length=20,blank=True, null=False)
+    guest = models.IntegerField(blank=False, null=False, default=1)
 
     class Meta:
         db_table = "reservation"
@@ -68,17 +72,19 @@ class Reservation(models.Model):
     def __str__(self):
         return self.name
 
-class About(models.Model):
-    title = models.CharField(max_length=150, blank=False, null=False)
-    description = models.CharField(max_length=650, blank=False, null=False)
-    image = models.ImageField(upload_to='images/', blank=False, null=False)
+
+class Contact_User(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    subject = models.CharField(max_length=250, blank=True, null=True)
+    message = models.CharField(max_length=250, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = "about"
+        db_table = "contact_user"
 
     def __str__(self):
-        return self.title
+        return self.name
 
 
 class Customer(models.Model):
@@ -87,3 +93,33 @@ class Customer(models.Model):
     job = models.CharField(max_length=150, blank=False, null=False)
     description = models.CharField(max_length=250, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "customer"
+
+    def __str__(self):
+        return self.name
+
+
+class Commenter(models.Model):
+    name = models.CharField(max_length=150, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    message = models.CharField(max_length=250, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "commentor"
+
+    def __str__(self):
+        return self.name
+
+
+class User(models.Model):
+    email = models.EmailField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "user"
+
+    def __str__(self):
+        return self.email
